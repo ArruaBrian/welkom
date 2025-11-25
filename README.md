@@ -27,7 +27,7 @@ src/
 
 ## Proveedores
 - `ProveedorTema`: tema claro/oscuro y overlay de feedback.
-- `ProveedorFavoritos`: gestiona “opciones guardadas” con confetti.
+- `ProveedorFavoritos`: gestiona “opciones guardadas”.
 - `ProveedorPerfil`: perfil fijo (GuidoHotel) y flag para usar la API.
 
 ## Hooks destacados
@@ -56,12 +56,9 @@ npm run dev
 ## Estándares y buenas prácticas
 - Componentes organizados por atomic design (atoms/molecules/organisms).
 - Hooks separados por capa: UI (app/hooks) vs datos/API (src/hooks).
-- Textos en español, copy humano y sin referencias al proyecto anterior.
-- Imágenes de respaldo en `/public/images/placeholder-room.svg`.
-- Sin lógica de múltiples hoteles: todo apunta a un único hotel.
+
 
 ## Próximos pasos sugeridos
 - Integrar imágenes reales por habitación desde la API o CMS.
 - Añadir validaciones/formato de fechas y máscaras de inputs.
-- Consolidar hooks en un único namespace si se prefiere (p.ej. mover todo a `src/hooks`).
 - Agregar pruebas básicas de componentes y hooks (Jest/RTL) si se necesita cobertura.
