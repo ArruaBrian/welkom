@@ -1,14 +1,14 @@
-﻿"use client";
+"use client";
 
+import { AnimatePresence, motion } from "framer-motion";
+import { Suspense, useMemo } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Encabezado from "../../componentes/organisms/Encabezado";
 import Filtros from "../../componentes/molecules/Filtros";
 import TarjetaHabitacion from "../../componentes/organisms/TarjetaHabitacion";
 import { useDisponibilidad } from "../../hooks/useDisponibilidad";
-import { useMemo } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
 
-export default function PaginaHabitaciones() {
+function PaginaHabitaciones() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -24,10 +24,7 @@ export default function PaginaHabitaciones() {
     return { preferencia, checkIn, checkOut, huespedes, tags };
   }, [searchParams]);
 
-  const { resultados, actualizarFiltros, filtros } = useDisponibilidad(
-    undefined,
-    filtrosIniciales
-  );
+  const { resultados, actualizarFiltros, filtros } = useDisponibilidad(undefined, filtrosIniciales);
 
   const sincronizarQuery = (filtros: typeof filtrosIniciales) => {
     const params = new URLSearchParams();
@@ -57,12 +54,10 @@ export default function PaginaHabitaciones() {
 
       <main className="mx-auto max-w-6xl px-6 pb-16">
         <section className="flex flex-col gap-3 py-6">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary-base">
-            Habitaciones
-          </p>
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary-base">Habitaciones</p>
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <h1 className="text-3xl font-bold text-[var(--color-text-dark)] dark:text-[var(--color-dark-text)]">
-              Elige tu habitaciÃ³n perfecta
+              Elige tu habitacion perfecta
             </h1>
             <span className="text-sm text-[var(--color-text-sub)] dark:text-[var(--color-dark-text-sub)]">
               Resultados: {resultados.length}
@@ -82,11 +77,7 @@ export default function PaginaHabitaciones() {
               transition={{ duration: 0.35, ease: "easeOut" }}
             >
               {resultados.map((habitacion, indice) => (
-                <TarjetaHabitacion
-                  key={habitacion.id}
-                  habitacion={habitacion}
-                  prioridad={indice < 3}
-                />
+                <TarjetaHabitacion key={habitacion.id} habitacion={habitacion} prioridad={indice < 3} />
               ))}
             </motion.div>
           ) : (
@@ -96,7 +87,7 @@ export default function PaginaHabitaciones() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              No encontramos habitaciones para tu bÃºsqueda. Intenta con otras fechas o tipo.
+              No encontramos habitaciones para tu busqueda. Intenta con otras fechas o tipo.
             </motion.div>
           )}
         </AnimatePresence>
@@ -105,4 +96,11 @@ export default function PaginaHabitaciones() {
   );
 }
 
+export default function PaginaHabitacionesWrapper() {
+  return (
+    <Suspense fallback={<div />}>
+      <PaginaHabitaciones />
+    </Suspense>
+  );
+}
 

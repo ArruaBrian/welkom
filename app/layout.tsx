@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ProveedorTema } from "./proveedores/ProveedorTema";
@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Guido Hotel",
-  description: "Portal de reservas y autogestión de Guido Hotel.",
+  description: "Portal de reservas y autogestion de Guido Hotel.",
   applicationName: "Guido Hotel",
   keywords: ["hotel", "reservas", "habitaciones", "autogestion"],
   alternates: {
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Guido Hotel",
-    description: "Portal de reservas y autogestión de Guido Hotel.",
+    description: "Portal de reservas y autogestion de Guido Hotel.",
     url: "/",
     siteName: "Guido Hotel",
     locale: "es_ES",
@@ -36,16 +36,14 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Guido Hotel",
-    description: "Portal de reservas y autogestión de Guido Hotel.",
+    description: "Portal de reservas y autogestion de Guido Hotel.",
   },
   icons: {
     icon: "/icon.svg",
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>

@@ -1,14 +1,15 @@
-﻿"use client";
+"use client";
 
+import { AnimatePresence, motion } from "framer-motion";
+import { Suspense, useMemo } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Encabezado from "../../componentes/organisms/Encabezado";
 import TarjetaHabitacion from "../../componentes/organisms/TarjetaHabitacion";
 import Filtros from "../../componentes/molecules/Filtros";
 import { useFavoritos } from "../../proveedores/ProveedorFavoritos";
 import { useDisponibilidad } from "../../hooks/useDisponibilidad";
-import { AnimatePresence, motion } from "framer-motion";
-import { useMemo } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-export default function PaginaOpciones() {
+
+function PaginaOpcionesInner() {
   const { favoritos } = useFavoritos();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -25,12 +26,8 @@ export default function PaginaOpciones() {
     return { preferencia, checkIn, checkOut, huespedes, tags };
   }, [searchParams]);
 
-  const { resultados, actualizarFiltros, filtros } = useDisponibilidad(
-    undefined,
-    filtrosIniciales
-  );
+  const { resultados, actualizarFiltros, filtros } = useDisponibilidad(undefined, filtrosIniciales);
 
-  // Solo mostrar habitaciones marcadas con corazón, tanto locales como API.
   const resultadosFavoritos = useMemo(
     () => resultados.filter((item) => favoritos.has(item.id)),
     [resultados, favoritos]
@@ -65,9 +62,7 @@ export default function PaginaOpciones() {
       <main className="mx-auto max-w-6xl px-6 pb-16 pt-6">
         <div className="flex items-baseline justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary-base">
-              Opciones guardadas
-            </p>
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary-base">Opciones guardadas</p>
             <h1 className="text-3xl font-bold text-[var(--color-text-dark)] dark:text-[var(--color-dark-text)]">
               Habitaciones que te interesan
             </h1>
@@ -89,11 +84,7 @@ export default function PaginaOpciones() {
               transition={{ duration: 0.35, ease: "easeOut" }}
             >
               {resultadosFavoritos.map((habitacion, indice) => (
-                <TarjetaHabitacion
-                  key={habitacion.id}
-                  habitacion={habitacion}
-                  prioridad={indice < 3}
-                />
+                <TarjetaHabitacion key={habitacion.id} habitacion={habitacion} prioridad={indice < 3} />
               ))}
             </motion.div>
           ) : (
@@ -103,7 +94,7 @@ export default function PaginaOpciones() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              Aún no tienes opciones guardadas. Usa el corazón en las habitaciones para agregarlas.
+              Aun no tienes opciones guardadas. Usa el corazon en las habitaciones para agregarlas.
             </motion.div>
           )}
         </AnimatePresence>
@@ -112,4 +103,11 @@ export default function PaginaOpciones() {
   );
 }
 
+export default function PaginaOpciones() {
+  return (
+    <Suspense fallback={<div />}>
+      <PaginaOpcionesInner />
+    </Suspense>
+  );
+}
 

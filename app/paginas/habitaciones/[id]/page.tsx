@@ -1,20 +1,20 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { useParams, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense, useEffect, useMemo, useState } from "react";
+import { useParams, useSearchParams } from "next/navigation";
 import Encabezado from "../../../componentes/organisms/Encabezado";
-import { Habitacion } from "../../datos/habitaciones";
+import { Habitacion } from "../../../datos/habitaciones";
 import { useRoom } from "../../../../src/hooks/useRoom";
 import { useRooms } from "../../../../src/hooks/useRooms";
 import { mapRoomToHabitacion } from "../../../lib/mapRoom";
 
-export default function DetalleHabitacion() {
+function DetalleHabitacionInner() {
   const params = useParams();
   const searchParams = useSearchParams();
   const id = params?.id as string;
-  const { rooms: roomsApi } = useRooms({ refetchIntervalMs: 15000 });
+  const { rooms: roomsApi, isLoading: roomsLoading } = useRooms({ refetchIntervalMs: 15000 });
   const { room, isLoading, error } = useRoom(id);
 
   const habitacionApiDesdeLista = useMemo(() => {
@@ -27,18 +27,15 @@ export default function DetalleHabitacion() {
   }, [room]);
 
   const habitacion: Habitacion | null = habitacionApiDesdeLista || habitacionApi;
-  const [src, setSrc] = useState("/images/placeholder-room.svg");
 
+  const imagenPrincipal = useMemo(
+    () => habitacion?.imagen || "/images/placeholder-room.svg",
+    [habitacion?.imagen]
+  );
+  const [src, setSrc] = useState(imagenPrincipal);
   useEffect(() => {
-    const raf = requestAnimationFrame(() => {
-      if (!habitacion?.imagen) {
-        setSrc("/images/placeholder-room.svg");
-      } else {
-        setSrc(habitacion.imagen as string);
-      }
-    });
-    return () => cancelAnimationFrame(raf);
-  }, [habitacion?.imagen]);
+    setSrc(imagenPrincipal);
+  }, [imagenPrincipal]);
 
   const qs = useMemo(() => {
     const query = new URLSearchParams();
@@ -52,23 +49,15 @@ export default function DetalleHabitacion() {
     return query.toString();
   }, [searchParams, id]);
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-[var(--color-background-white)] text-foreground dark:bg-[var(--color-dark-background)]">
-        <Encabezado />
-        <main className="mx-auto max-w-5xl px-6 pb-16 pt-6">
-          <p>Cargando habitación...</p>
-        </main>
-      </div>
-    );
-  }
+  const disponible = (habitacion?.estado || "").toLowerCase().includes("disponible");
+  const cargando = isLoading || roomsLoading;
 
-  if (!habitacion || error) {
+  if (cargando || error || !habitacion) {
     return (
       <div className="min-h-screen bg-[var(--color-background-white)] text-foreground dark:bg-[var(--color-dark-background)]">
         <Encabezado />
-        <main className="mx-auto max-w-5xl px-6 pb-16 pt-6 space-y-3">
-          <p>No se encontró la habitación.</p>
+        <main className="mx-auto max-w-5xl space-y-3 px-6 pb-16 pt-6">
+          <p>{cargando ? "Cargando habitacion..." : "No se encontro la habitacion."}</p>
           <Link
             href="/paginas/habitaciones"
             className="inline-flex rounded-full border border-[var(--border)] px-4 py-2 text-sm text-[var(--color-text-sub)] hover:border-primary-base hover:text-primary-base"
@@ -79,8 +68,6 @@ export default function DetalleHabitacion() {
       </div>
     );
   }
-
-  const disponible = (habitacion.estado || "").toLowerCase().includes("disponible");
 
   return (
     <div className="min-h-screen bg-[var(--color-background-white)] text-foreground dark:bg-[var(--color-dark-background)]">
@@ -105,7 +92,7 @@ export default function DetalleHabitacion() {
                 {habitacion.estado || "Estado no indicado"}
               </span>
               <span className="rounded-full bg-white/85 px-4 py-2 text-xs font-semibold text-[var(--color-text-sub)]">
-                Piso {habitacion.piso} · {habitacion.tipo}
+                Piso {habitacion.piso} | {habitacion.tipo}
               </span>
             </div>
           </div>
@@ -116,22 +103,22 @@ export default function DetalleHabitacion() {
                 {habitacion.nombre}
               </h1>
               <p className="text-sm text-[var(--color-text-sub)] dark:text-[var(--color-dark-text-sub)]">
-                {habitacion.descripcion || "Habitación del hotel."}
+                {habitacion.descripcion || "Habitacion del hotel."}
               </p>
               <p className="text-sm font-semibold text-[var(--color-text-dark)] dark:text-[var(--color-dark-text)]">
-                Capacidad base {habitacion.capacidad} huéspedes
+                Capacidad base {habitacion.capacidad} huespedes
               </p>
               {(habitacion.maxAdultos || habitacion.maxNinos || habitacion.maxBebes) && (
                 <p className="text-sm text-[var(--color-text-sub)] dark:text-[var(--color-dark-text-sub)]">
-                  Límites: {habitacion.maxAdultos ? `Adultos ${habitacion.maxAdultos}` : ""}
-                  {habitacion.maxNinos ? ` · Niños ${habitacion.maxNinos}` : ""}
-                  {habitacion.maxBebes ? ` · Bebés ${habitacion.maxBebes}` : ""}
+                  Limites: {habitacion.maxAdultos ? `Adultos ${habitacion.maxAdultos}` : ""}
+                  {habitacion.maxNinos ? ` | Ninos ${habitacion.maxNinos}` : ""}
+                  {habitacion.maxBebes ? ` | Bebes ${habitacion.maxBebes}` : ""}
                 </p>
               )}
               {(habitacion.cunaDisponible || habitacion.extraCamaDisponible) && (
                 <p className="text-xs text-[var(--color-text-sub)] dark:text-[var(--color-dark-text-sub)]">
                   {habitacion.cunaDisponible ? "Cuna disponible" : ""}
-                  {habitacion.cunaDisponible && habitacion.extraCamaDisponible ? " · " : ""}
+                  {habitacion.cunaDisponible && habitacion.extraCamaDisponible ? " | " : ""}
                   {habitacion.extraCamaDisponible ? "Cama extra disponible" : ""}
                 </p>
               )}
@@ -142,15 +129,18 @@ export default function DetalleHabitacion() {
               )}
             </div>
             <div className="flex flex-wrap gap-2 text-xs text-[var(--color-text-sub)] dark:text-[var(--color-dark-text-sub)]">
-              {habitacion.amenities.map((amenity) => (
-                <span
-                  key={amenity}
-                  className="rounded-full bg-color-primary-extra-light px-3 py-1 text-primary-base dark:bg-[rgba(213,33,81,0.15)]"
-                >
-                  {amenity}
-                </span>
-              ))}
-              {habitacion.amenities.length === 0 && <span>Sin amenities registrados</span>}
+              {habitacion.amenities.length > 0 ? (
+                habitacion.amenities.map((amenity) => (
+                  <span
+                    key={amenity}
+                    className="rounded-full bg-color-primary-extra-light px-3 py-1 text-primary-base dark:bg-[rgba(213,33,81,0.15)]"
+                  >
+                    {amenity}
+                  </span>
+                ))
+              ) : (
+                <span>Sin amenities registrados</span>
+              )}
             </div>
             <div className="grid gap-3 rounded-2xl bg-color-primary-extra-light px-4 py-3 text-[var(--color-text-dark)] dark:bg-[rgba(213,33,81,0.08)] dark:text-[var(--color-dark-text)]">
               <div className="flex items-center justify-between">
@@ -166,7 +156,7 @@ export default function DetalleHabitacion() {
                 href={`/paginas/reserva${qs ? "?" + qs : ""}`}
                 className="inline-flex items-center justify-center rounded-full bg-primary-base px-5 py-2 text-sm font-semibold text-white shadow-md transition-transform duration-200 ease-out hover:scale-105 hover:shadow-lg active:scale-95"
               >
-                Reservar esta habitación
+                Reservar esta habitacion
               </Link>
             </div>
             <div className="flex gap-3 pt-2">
@@ -183,3 +173,12 @@ export default function DetalleHabitacion() {
     </div>
   );
 }
+
+export default function DetalleHabitacionPage() {
+  return (
+    <Suspense fallback={<div />}>
+      <DetalleHabitacionInner />
+    </Suspense>
+  );
+}
+

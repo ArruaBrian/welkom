@@ -18,6 +18,7 @@ export type RoomWrapper = {
   crib_available: boolean;
   extra_bed_available: boolean;
   amenities: string[] | null;
+  id_floor?: string;
 };
 
 export type Room = {

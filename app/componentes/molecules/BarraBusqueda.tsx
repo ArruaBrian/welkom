@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { FormEvent, useRef, useState } from "react";
 import { ParametrosBusqueda } from "../../hooks/useDisponibilidad";
@@ -33,9 +33,7 @@ export default function BarraBusqueda({ onBuscar }: Props) {
       className="grid w-full grid-cols-[1.5fr_1.1fr_1.1fr_1fr_auto] items-center gap-1 rounded-full border border-[var(--border)] bg-white px-3 py-2 text-[var(--color-text-dark)] shadow-sm transition hover:shadow-md dark:border-[var(--color-dark-border)] dark:bg-[var(--color-dark-surface)] dark:text-[var(--color-dark-text)]"
     >
       <div className="flex items-center gap-2 rounded-full px-3 py-2 hover:bg-[var(--color-background-light)] dark:hover:bg-[rgba(255,255,255,0.04)]">
-        <span className="text-[12px] font-semibold uppercase tracking-wide text-primary-base">
-          Habitación
-        </span>
+        <span className="text-[12px] font-semibold uppercase tracking-wide text-primary-base">Habitacion</span>
         <input
           className="flex-1 bg-transparent text-sm outline-none placeholder:text-[var(--color-text-sub)] dark:placeholder:text-[var(--color-dark-text-sub)]"
           placeholder="Nombre, tipo, amenidad"
@@ -95,9 +93,7 @@ export default function BarraBusqueda({ onBuscar }: Props) {
         />
       </button>
       <div className="flex items-center gap-2 rounded-full px-3 py-2 hover:bg-[var(--color-background-light)] dark:hover:bg-[rgba(255,255,255,0.04)]">
-        <span className="text-[12px] font-semibold uppercase tracking-wide text-primary-base">
-          Huéspedes
-        </span>
+        <span className="text-[12px] font-semibold uppercase tracking-wide text-primary-base">Huespedes</span>
         <input
           type="number"
           min={1}

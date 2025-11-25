@@ -2,6 +2,10 @@
 import { Habitacion } from "../datos/habitaciones";
 
 export function mapRoomToHabitacion(room: Room): Habitacion {
+  const tipoBruto = room.roomWrapper?.name || room.name || "Estandar";
+  const tipo: Habitacion["tipo"] =
+    tipoBruto === "Suite" ? "Suite" : tipoBruto === "Deluxe" ? "Deluxe" : "Estandar";
+
   return {
     id: room.id,
     nombre: room.roomWrapper?.name || room.name || "",
@@ -12,7 +16,7 @@ export function mapRoomToHabitacion(room: Room): Habitacion {
     imagen: "",
     disponibleDesde: "2025-01-01",
     disponibleHasta: "2025-12-31",
-    tipo: room.roomWrapper?.name || room.name || "Estandar",
+    tipo,
     piso: 1,
     estado: room.roomStatus?.name || room.status,
     estadoDescripcion: room.roomStatus?.description,
@@ -21,6 +25,6 @@ export function mapRoomToHabitacion(room: Room): Habitacion {
     maxBebes: room.roomWrapper?.max_infants,
     cunaDisponible: room.roomWrapper?.crib_available,
     extraCamaDisponible: room.roomWrapper?.extra_bed_available,
-    idPiso: room.roomWrapper?.id_floor,
+    idPiso: undefined,
   };
 }

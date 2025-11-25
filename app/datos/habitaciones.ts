@@ -1,4 +1,4 @@
-﻿export type Habitacion = {
+export type Habitacion = {
   id: string;
   nombre: string;
   descripcion: string;
@@ -24,8 +24,7 @@ export const habitaciones: Habitacion[] = [
   {
     id: "suite-imperial",
     nombre: "Suite Imperial",
-    descripcion:
-      "Suite amplia con vista al mar, sala de estar independiente y detalles clásicos.",
+    descripcion: "Suite amplia con vista al mar, sala de estar independiente y detalles clasicos.",
     capacidad: 4,
     amenities: ["Vista al mar", "Sala de estar", "Servicio de mayordomo", "Desayuno incluido"],
     precioNoche: 950,
@@ -35,7 +34,7 @@ export const habitaciones: Habitacion[] = [
     tipo: "Suite",
     piso: 8,
     estado: "Disponible",
-    estadoDescripcion: "Habitación disponible para reservar",
+    estadoDescripcion: "Habitacion disponible para reservar",
     maxAdultos: 4,
     maxNinos: 1,
     maxBebes: 1,
@@ -46,9 +45,9 @@ export const habitaciones: Habitacion[] = [
   {
     id: "suite-avenida",
     nombre: "Suite Avenida",
-    descripcion: "Suite elegante con balcón a la ciudad, perfecta para escapadas románticas.",
+    descripcion: "Suite elegante con balcon a la ciudad, perfecta para escapadas romanticas.",
     capacidad: 3,
-    amenities: ["Balcón", "Vista ciudad", "Desayuno incluido", "Cafetera premium"],
+    amenities: ["Balcon", "Vista ciudad", "Desayuno incluido", "Cafetera premium"],
     precioNoche: 720,
     imagen: "/images/suite-avenida.jpg",
     disponibleDesde: "2025-01-01",
@@ -56,7 +55,7 @@ export const habitaciones: Habitacion[] = [
     tipo: "Suite",
     piso: 6,
     estado: "Disponible",
-    estadoDescripcion: "Habitación disponible para reservar",
+    estadoDescripcion: "Habitacion disponible para reservar",
     maxAdultos: 3,
     maxNinos: 1,
     maxBebes: 1,
@@ -67,7 +66,7 @@ export const habitaciones: Habitacion[] = [
   {
     id: "deluxe-mar",
     nombre: "Deluxe Vista Mar",
-    descripcion: "Habitación amplia con cama king y vista parcial al mar.",
+    descripcion: "Habitacion amplia con cama king y vista parcial al mar.",
     capacidad: 2,
     amenities: ["Vista parcial al mar", "Wi-Fi", "Desayuno incluido"],
     precioNoche: 520,
@@ -77,7 +76,7 @@ export const habitaciones: Habitacion[] = [
     tipo: "Deluxe",
     piso: 5,
     estado: "Disponible",
-    estadoDescripcion: "Habitación disponible para reservar",
+    estadoDescripcion: "Habitacion disponible para reservar",
     maxAdultos: 2,
     maxNinos: 1,
     maxBebes: 1,
@@ -109,7 +108,7 @@ export const habitaciones: Habitacion[] = [
   {
     id: "estandar-king",
     nombre: "Estandar King",
-    descripcion: "Habitación acogedora con cama king y todas las comodidades esenciales.",
+    descripcion: "Habitacion acogedora con cama king y todas las comodidades esenciales.",
     capacidad: 2,
     amenities: ["Cama king", "Wi-Fi", "Room service 24/7"],
     precioNoche: 310,
@@ -119,7 +118,7 @@ export const habitaciones: Habitacion[] = [
     tipo: "Estandar",
     piso: 3,
     estado: "Disponible",
-    estadoDescripcion: "Habitación disponible para reservar",
+    estadoDescripcion: "Habitacion disponible para reservar",
     maxAdultos: 2,
     maxNinos: 0,
     maxBebes: 0,
@@ -130,7 +129,7 @@ export const habitaciones: Habitacion[] = [
   {
     id: "estandar-doble",
     nombre: "Estandar Doble",
-    descripcion: "Opción eficiente con dos camas individuales, ideal para amigos o familias.",
+    descripcion: "Opcion eficiente con dos camas individuales, ideal para amigos o familias.",
     capacidad: 2,
     amenities: ["Dos camas", "Wi-Fi", "Room service 24/7"],
     precioNoche: 280,
@@ -140,7 +139,7 @@ export const habitaciones: Habitacion[] = [
     tipo: "Estandar",
     piso: 2,
     estado: "No disponible",
-    estadoDescripcion: "Ocupada o en preparación",
+    estadoDescripcion: "Ocupada o en preparacion",
     maxAdultos: 2,
     maxNinos: 0,
     maxBebes: 0,
@@ -149,3 +148,4 @@ export const habitaciones: Habitacion[] = [
     idPiso: "piso-2",
   },
 ];
+

@@ -1,14 +1,14 @@
-﻿"use client";
+"use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { Suspense, useMemo } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Encabezado from "./componentes/organisms/Encabezado";
 import Filtros from "./componentes/molecules/Filtros";
 import TarjetaHabitacion from "./componentes/organisms/TarjetaHabitacion";
 import { useDisponibilidad } from "./hooks/useDisponibilidad";
-import { useMemo } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 
-export default function PaginaPrincipal() {
+function PaginaPrincipal() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -24,10 +24,7 @@ export default function PaginaPrincipal() {
     return { preferencia, checkIn, checkOut, huespedes, tags };
   }, [searchParams]);
 
-  const { resultados, actualizarFiltros, filtros } = useDisponibilidad(
-    undefined,
-    filtrosIniciales
-  );
+  const { resultados, actualizarFiltros, filtros } = useDisponibilidad(undefined, filtrosIniciales);
 
   const sincronizarQuery = (filtros: typeof filtrosIniciales) => {
     const params = new URLSearchParams();
@@ -63,10 +60,10 @@ export default function PaginaPrincipal() {
                 Guido Hotel
               </p>
               <h1 className="text-3xl font-bold text-[var(--color-text-dark)] dark:text-[var(--color-dark-text)]">
-                Reserva fácil y sin complicaciones
+                Reserva facil y sin complicaciones
               </h1>
               <p className="text-sm text-[var(--color-text-sub)] dark:text-[var(--color-dark-text-sub)]">
-                Ajusta fechas, huéspedes y guarda tus opciones favoritas. Todo pensado para un check-in tranquilo.
+                Ajusta fechas, huespedes y guarda tus opciones favoritas. Todo pensado para un check-in tranquilo.
               </p>
             </div>
             <span className="text-sm text-[var(--color-text-sub)] dark:text-[var(--color-dark-text-sub)]">
@@ -87,11 +84,7 @@ export default function PaginaPrincipal() {
               transition={{ duration: 0.35, ease: "easeOut" }}
             >
               {resultados.map((habitacion, indice) => (
-                <TarjetaHabitacion
-                  key={habitacion.id}
-                  habitacion={habitacion}
-                  prioridad={indice < 3}
-                />
+                <TarjetaHabitacion key={habitacion.id} habitacion={habitacion} prioridad={indice < 3} />
               ))}
             </motion.div>
           ) : (
@@ -101,13 +94,20 @@ export default function PaginaPrincipal() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              No encontramos habitaciones para tu búsqueda. Intenta con otras
-              fechas o tipo.
+              No encontramos habitaciones para tu busqueda. Intenta con otras fechas o tipo.
             </motion.div>
           )}
         </AnimatePresence>
       </main>
     </div>
+  );
+}
+
+export default function PaginaPrincipalWrapper() {
+  return (
+    <Suspense fallback={<div />}>
+      <PaginaPrincipal />
+    </Suspense>
   );
 }
 

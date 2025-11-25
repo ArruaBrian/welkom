@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import Logo from "../atoms/Logo";
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
@@ -20,7 +20,7 @@ export default function Footer() {
             </div>
           </div>
           <div className="flex flex-wrap gap-2 text-xs text-primary-base">
-            <span className="rounded-full bg-white px-3 py-1 shadow-sm">Piscina & Spa</span>
+            <span className="rounded-full bg-white px-3 py-1 shadow-sm">Piscina y spa</span>
             <span className="rounded-full bg-white px-3 py-1 shadow-sm">Check-in 24/7</span>
             <span className="rounded-full bg-white px-3 py-1 shadow-sm">Wi-Fi incluido</span>
           </div>
@@ -31,7 +31,7 @@ export default function Footer() {
             <Logo size={44} ariaLabel="Logo Guido Hotel" />
             <div className="space-y-1">
               <p className="text-sm text-[var(--color-text-sub)] dark:text-[var(--color-dark-text-sub)]">
-                contacto@guidohotel.com · +00 0000-0000
+                contacto@guidohotel.com | +00 0000-0000
               </p>
             </div>
           </div>
@@ -70,7 +70,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/paginas/politica-cancelacion" className="hover:text-primary-base">
-                  Política de cancelación
+                  Politica de cancelacion
                 </Link>
               </li>
             </ul>
@@ -79,11 +79,8 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-[var(--border)] bg-[var(--color-background-white)] px-6 py-4 text-center text-xs text-[var(--color-text-sub)] dark:border-[var(--color-dark-border)] dark:bg-[var(--color-dark-surface)] dark:text-[var(--color-dark-text-sub)]">
-        © {new Date().getFullYear()} Guido Hotel. Todos los derechos reservados.
+        (c) {new Date().getFullYear()} Guido Hotel. Todos los derechos reservados.
       </div>
     </footer>
   );
 }
-
-
-

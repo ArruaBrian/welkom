@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -22,11 +22,11 @@ export default function TarjetaHabitacion({ habitacion, prioridad }: Props) {
   const resumenCapacidad = useMemo(() => {
     return [
       habitacion.maxAdultos ? `Adultos ${habitacion.maxAdultos}` : null,
-      habitacion.maxNinos ? `Niños ${habitacion.maxNinos}` : null,
-      habitacion.maxBebes ? `Bebés ${habitacion.maxBebes}` : null,
+      habitacion.maxNinos ? `Ninos ${habitacion.maxNinos}` : null,
+      habitacion.maxBebes ? `Bebes ${habitacion.maxBebes}` : null,
     ]
       .filter(Boolean)
-      .join(" · ");
+      .join(" | ");
   }, [habitacion.maxAdultos, habitacion.maxBebes, habitacion.maxNinos]);
 
   const capacidadLabel = resumenCapacidad || `Capacidad ${habitacion.capacidad || "N/D"}`;
@@ -74,10 +74,10 @@ export default function TarjetaHabitacion({ habitacion, prioridad }: Props) {
               ? "bg-primary-base text-white"
               : "bg-white/90 text-primary-base dark:bg-[rgba(27,31,46,0.9)] dark:text-[var(--color-dark-text)]"
           }`}
-          aria-label={enSeleccion ? "Quitar de opciones" : "Guardar como opción"}
+          aria-label={enSeleccion ? "Quitar de opciones" : "Guardar como opcion"}
           disabled={!disponible}
         >
-          ♥
+          {enSeleccion ? "♥" : "♡"}
         </button>
         {!disponible && <div className="absolute inset-0 bg-[rgba(0,0,0,0.35)] backdrop-brightness-75" />}
       </div>
@@ -88,7 +88,7 @@ export default function TarjetaHabitacion({ habitacion, prioridad }: Props) {
             <p className="text-[11px] uppercase tracking-[0.22em] text-primary-base">{habitacion.tipo}</p>
             <h3 className="text-xl font-semibold leading-tight">{habitacion.nombre}</h3>
             <p className="text-sm text-[var(--color-text-sub)] dark:text-[var(--color-dark-text-sub)] line-clamp-2">
-              {habitacion.descripcion || "Habitación del hotel."}
+              {habitacion.descripcion || "Habitacion del hotel."}
             </p>
           </div>
           <div className="text-right text-sm font-semibold text-[var(--color-text-sub)] dark:text-[var(--color-dark-text-sub)]">
@@ -147,3 +147,4 @@ export default function TarjetaHabitacion({ habitacion, prioridad }: Props) {
     </motion.article>
   );
 }
+
